@@ -32,7 +32,7 @@ public class RegisterWrapper extends AbstractApiConnection {
    * @return URL
    */
   public String deleteUser(String user, String token) {
-    String apiUrl = "http://localhost:8080/WebRegisterAPI/v1/delete/" + user + "/" + token;
+    String apiUrl = "http://localhost:8888/WebRegisterAPI/v1/delete/" + user + "/" + token;
     System.out.println(apiUrl);
     HttpURLConnection connection;
     boolean success = false;
@@ -56,7 +56,7 @@ public class RegisterWrapper extends AbstractApiConnection {
   public String signup(UserSignupBean user, HttpSession session) {
 
     String navigationLink;
-    String apiUrl = "http://localhost:8080/WebRegisterAPI/api/register/new/user";
+    String apiUrl = "http://localhost:8888/register/api/register/new/user";
     int responseCode;
     boolean signupSuccess;
     HttpURLConnection connection;

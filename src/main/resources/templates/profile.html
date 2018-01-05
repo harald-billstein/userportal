@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Profile</title>
-  <link th:href="@{/css/default.css}" rel="stylesheet" />
+  <link th:href="@{/css/default.css}" rel="stylesheet"/>
 </head>
 <body>
-<h1>Welcome !name!</h1>
+<h1 th:text="${welcome}"></h1>
 
 </body>
 </html>

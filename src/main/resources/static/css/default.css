@@ -7,7 +7,17 @@ Main Primary color
 .color-primary-4 { color: #550000 }
 */
 body {
-  background-color: #AA3939;
+  background-color: #0d632c;
+}
+
+.login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  background-color: #1c462f;
 }
 
 .header {

@@ -1,43 +1,44 @@
 package billstein.harald.userportal.controllers;
 
+import billstein.harald.userportal.api.LoginWrapper;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoginController {
 
-  private String userName;
-  private String password;
-
   @RequestMapping("/login")
-  public String getLoginPage(Model model) {
+  public String getLoginPage() {
     System.out.println("Login controller activated!");
-
-    // TODO if userinput is OK, ready req and send to profile
     return "login";
   }
 
   @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public String submitForm(HttpServletRequest request) {
+  public ModelAndView submitForm(HttpServletRequest request, ModelAndView modelAndView) {
     System.out.println("Login controller: submitForm");
-    String redirectPage;
+
+    HttpSession session = request.getSession();
+    boolean loginSuccess;
 
     String userName = request.getParameter("username");
     String password = request.getParameter("password");
-    System.out.println(request.getParameter("username"));
-    System.out.println(request.getParameter("password"));
 
-    request.setAttribute("username", userName);
+    System.out.println("username: " + userName);
+    System.out.println("password: " + password);
 
-    if (userName.equals("test") && password.equals("test")){
-      redirectPage = "redirect:/profile";
+    LoginWrapper loginWrapper = new LoginWrapper();
+    loginSuccess = loginWrapper.login(userName, password, session);
+
+    if (loginSuccess) {
+      modelAndView.setViewName("forward:/profile");
     } else {
-      redirectPage = "login";
+      modelAndView.setViewName("login");
     }
-    return redirectPage;
+    return modelAndView;
   }
 
 

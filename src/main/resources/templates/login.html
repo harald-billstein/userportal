@@ -2,15 +2,38 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width-device-width, initial-scale=1.0">
   <title>Login</title>
-  <link th:href="@{/css/default.css}" rel="stylesheet" />
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
 </head>
 <body>
-<form method="post">
-  <input type="text" name="username">
-  <input type="text" name="password">
-  <button type="submit">Login!</button>
-</form>
+
+<div class="login-form">
+  <div class="login-face"><img th:src="@{/images/login_face.png}"></div>
+  <section class="form">
+
+    <form method="post">
+
+      <div class="input uname">
+        <input type="text" name="username" placeholder="Enter Username" required="required">
+        <i class="fa fa-user"></i>
+      </div>
+
+
+      <div class="input pass">
+        <input type="text" name="password" placeholder="Enter Password" required="required">
+        <i class="fa fa-lock"></i>
+      </div>
+
+      <input type="submit" class="btn-login" value="Login">
+
+    </form>
+  </section>
+
+  <form method="get" action="/register">
+    <button type="submit">Signup!</button>
+  </form>
+</div>
 
 
 </body>

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 
 /**
@@ -17,6 +19,7 @@ import org.json.JSONObject;
  * @author Harald & Stefan
  * @since 2017-12-12
  */
+@Service
 public class LoginWrapper extends AbstractApiConnection {
 
   /**
@@ -26,17 +29,17 @@ public class LoginWrapper extends AbstractApiConnection {
    * @param password passed to API
    * @return URL
    */
-  public String login(String username, String password, HttpSession session) {
+  public boolean login(String username, String password, HttpSession session) {
 
     HttpURLConnection connection;
     BufferedReader br;
     JSONObject jsonObj;
-    String link = "http://localhost:8080/LoginApi/api/login/" + username;
-    String token = null;
-    String redirectLink = null;
+    String link = "http://localhost:8888/login/api/login/" + username;
+    String token;
     String output;
+    boolean loginSuccess = false;
 
-    List<RequestPropertyPair> pairs = new ArrayList<RequestPropertyPair>();
+    List<RequestPropertyPair> pairs = new ArrayList<>();
     RequestPropertyPair pair = new RequestPropertyPair();
     pair.setKey("password");
     pair.setValue(password);
@@ -44,7 +47,6 @@ public class LoginWrapper extends AbstractApiConnection {
     connection = getConnection(link, "GET", pairs);
 
     try {
-
       if (connection.getResponseCode() == 200) {
         br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
@@ -52,37 +54,51 @@ public class LoginWrapper extends AbstractApiConnection {
           System.out.println("Response" + output);
           jsonObj = new JSONObject(output);
           token = (String) jsonObj.get("token");
-          //session = (HttpSession) context.getExternalContext().getSession(true);
           session.setAttribute("username", username);
           session.setAttribute("token", token);
         }
-
-        redirectLink = "profile?faces-redirect=true";
+        loginSuccess = true;
       }
 
     } catch (IOException e) {
       e.printStackTrace();
-      redirectLink = "login";
     }
-    return redirectLink;
+    return loginSuccess;
   }
 
 
   /**
    * Validates user, grants access if token is valid
    */
-  public HttpURLConnection validateUser(String username, String token) {
+  public boolean validateUser(String username, String token) {
 
-    String link = "http://localhost:8080/LoginApi/api/validate/" + username + "/" + token;
+    String link = "http://localhost:8888/login/api/validate/" + username + "/" + token;
     URL url;
     HttpURLConnection connection = null;
+    boolean accessGranted = false;
+
     try {
       url = new URL(link);
       connection = (HttpURLConnection) url.openConnection();
       connection.setRequestMethod("GET");
+
+      if (connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+        String output;
+        while ((output = br.readLine()) != null) {
+          System.out.println("Response" + output);
+          JSONObject jsonObj = new JSONObject(output);
+          accessGranted = (Boolean) jsonObj.get("userTokenValid");
+        }
+      } else {
+        System.out.println("Session expired!");
+        accessGranted = false;
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return connection;
+
+    return accessGranted;
   }
 }

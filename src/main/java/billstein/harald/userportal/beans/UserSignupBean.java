@@ -58,4 +58,15 @@ public class UserSignupBean {
   public void setEmail(String email) {
     this.email = email;
   }
+
+  @Override
+  public String toString() {
+    return "UserSignupBean{" +
+        "userName='" + userName + '\'' +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", password='" + password + '\'' +
+        ", email='" + email + '\'' +
+        '}';
+  }
 }
