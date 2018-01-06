@@ -2,10 +2,9 @@ package billstein.harald.userportal.api;
 
 /**
  * Holds a key value pair.
- * 
+ *
  * @author Harald & Stefan
  * @since 2017-12-14
- *
  */
 public class RequestPropertyPair {
 

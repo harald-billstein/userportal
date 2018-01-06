@@ -16,33 +16,26 @@ public class ProfileController {
   public ModelAndView profile(HttpServletRequest request, ModelAndView modelAndView, Model model) {
     System.out.println("Profile controller activated!");
 
-    HttpURLConnection connection;
     Boolean accessGranted = false;
+    LoginWrapper loginWrapper = new LoginWrapper();
 
     String userName = (String) request.getSession().getAttribute("username");
     String token = (String) request.getSession().getAttribute("token");
 
     if (token == null) {
       System.out.println("token null");
-      modelAndView.setViewName("forward:/login");
+      modelAndView.setViewName("redirect:/login");
     } else {
       System.out.println("token: " + token);
-      //TODO validate token!
-
-      LoginWrapper loginWrapper = new LoginWrapper();
       accessGranted = loginWrapper.validateUser(userName, token);
-
-
     }
 
     if (accessGranted) {
       System.out.println("user validated!");
-      modelAndView.setViewName("/profile");
+      modelAndView.setViewName("profile");
       model.addAttribute("welcome", "Welcome " + userName);
     }
 
     return modelAndView;
-
   }
-
 }

@@ -7,7 +7,7 @@
   <groupId>com.harald</groupId>
   <artifactId>spring5webapp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
 
   <name>spring5webapp</name>
   <description>Demo project for Spring Boot</description>

@@ -3,7 +3,7 @@ package billstein.harald.userportal.beans;
 
 /**
  * Class used to store information about a new user signing up
- * 
+ *
  * @author Harald & Stefan
  * @since 2017-12-12
  */

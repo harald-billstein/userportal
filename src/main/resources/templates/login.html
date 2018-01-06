@@ -5,13 +5,15 @@
   <meta name="viewport" content="width-device-width, initial-scale=1.0">
   <title>Login</title>
   <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 <body>
-
 <div class="login-form">
   <div class="login-face"><img th:src="@{/images/login_face.png}"></div>
-  <section class="form">
 
+  <section class="form">
     <form method="post">
 
       <div class="input uname">
@@ -19,18 +21,21 @@
         <i class="fa fa-user"></i>
       </div>
 
-
       <div class="input pass">
-        <input type="text" name="password" placeholder="Enter Password" required="required">
+        <input type="password" name="password" placeholder="Enter Password" required="required">
         <i class="fa fa-lock"></i>
       </div>
 
-      <input type="submit" class="btn-login" value="Login">
+      <p class="error-msg" th:text="${error}"></p>
+
+      <div>
+        <input type="submit" class="btn-login" value="Login">
+      </div>
 
     </form>
   </section>
 
-  <form method="get" action="/register">
+  <form method="get" action="getRegisterPage">
     <button type="submit">Signup!</button>
   </form>
 </div>

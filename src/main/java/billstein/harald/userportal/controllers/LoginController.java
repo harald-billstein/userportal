@@ -4,6 +4,7 @@ import billstein.harald.userportal.api.LoginWrapper;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,10 +18,18 @@ public class LoginController {
     return "login";
   }
 
+  @RequestMapping("/getRegisterPage")
+  public ModelAndView getRegisterPage(ModelAndView modelAndView) {
+    modelAndView.setViewName("redirect:/register");
+    return modelAndView;
+  }
+
   @RequestMapping(value = "/login", method = RequestMethod.POST)
-  public ModelAndView submitForm(HttpServletRequest request, ModelAndView modelAndView) {
+  public ModelAndView submitForm(HttpServletRequest request, ModelAndView modelAndView,
+      Model model) {
     System.out.println("Login controller: submitForm");
 
+    LoginWrapper loginWrapper = new LoginWrapper();
     HttpSession session = request.getSession();
     boolean loginSuccess;
 
@@ -30,16 +39,14 @@ public class LoginController {
     System.out.println("username: " + userName);
     System.out.println("password: " + password);
 
-    LoginWrapper loginWrapper = new LoginWrapper();
     loginSuccess = loginWrapper.login(userName, password, session);
-
     if (loginSuccess) {
-      modelAndView.setViewName("forward:/profile");
+      modelAndView.setViewName("redirect:/profile");
     } else {
       modelAndView.setViewName("login");
+      model.addAttribute("error", "Wrong Credential");
     }
+
     return modelAndView;
   }
-
-
 }

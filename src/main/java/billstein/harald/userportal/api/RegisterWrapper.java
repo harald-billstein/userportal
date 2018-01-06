@@ -12,7 +12,7 @@ import billstein.harald.userportal.beans.UserSignupBean;
 
 /**
  * Class handling calls to the login API
- * 
+ *
  * @author Harald & Stefan
  * @since 2017-12-12
  */
@@ -26,7 +26,7 @@ public class RegisterWrapper extends AbstractApiConnection {
 
   /**
    * Delete a user
-   * 
+   *
    * @param user user
    * @param user token
    * @return URL
@@ -49,13 +49,12 @@ public class RegisterWrapper extends AbstractApiConnection {
 
   /**
    * Registers a user
-   * 
+   *
    * @param user created
    * @return URL
    */
-  public String signup(UserSignupBean user, HttpSession session) {
+  public boolean signup(UserSignupBean user, HttpSession session) {
 
-    String navigationLink;
     String apiUrl = "http://localhost:8888/register/api/register/new/user";
     int responseCode;
     boolean signupSuccess;
@@ -65,14 +64,12 @@ public class RegisterWrapper extends AbstractApiConnection {
     responseCode = sendUserToApi(user, connection);
     signupSuccess = sendJsonSuccess(connection, "registerd");
 
-
     if (responseCode == 200 && signupSuccess) {
       setTokenToUserSession(user, session);
-      navigationLink = "profile?faces-redirect=true";
     } else {
-      navigationLink = "signup";
+      signupSuccess = false;
     }
-    return navigationLink;
+    return signupSuccess;
   }
 
   private int sendUserToApi(UserSignupBean user, HttpURLConnection connection) {

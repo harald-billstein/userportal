@@ -6,8 +6,8 @@ import org.springframework.context.annotation.Bean;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(UserportalApplication.class);
-	}
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    return application.sources(UserportalApplication.class);
+  }
 }
