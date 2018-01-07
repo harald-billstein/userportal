@@ -1,4 +1,4 @@
-# A login portal (web) [![Awesome](http://forthebadge.com/images/badges/gluten-free.svg)]()[![Awesome](http://forthebadge.com/images/badges/powered-by-electricity.svg)]()
+# A login portal (web) [![Awesome](http://forthebadge.com/images/badges/made-with-crayons.svg)]()[![Awesome](http://forthebadge.com/images/badges/compatibility-betamax.svg)]()
 
 School project focusing on Spring 5.
 
